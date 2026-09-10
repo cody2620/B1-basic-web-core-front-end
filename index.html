@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="베이직 웹 코어 프론트엔드 미션">
+    <title>Basic Web Core Front</title>
+
+    <!-- CSS 연결 -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/hero.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="css/skills.css">
+    <link rel="stylesheet" href="css/projects.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/footer.css">  
+
+    <!-- JS 연결 (defer로 DOM 로드 후 실행) -->
+    <script src="js/main.js" defer></script>
+</head>
+<body>
+
+    <!-- ============ 헤더 (네비게이션) ============ -->
+    <header class="header">
+        <nav class="nav">
+            <h1 class="nav-logo">Header</h1>
+
+            <ul class="nav-menu">
+                <li><a href="nav-link">Home</a></li>
+                <li><a href="nav-link">About</a></li>
+                <li><a href="nav-link">Skills</a></li>
+                <li><a href="nav-link">Projects</a></li>
+                <li><a href="nav-link">Contact</a></li>
+            </ul>
+
+            <button class="theme-toggle" aria-label="다크모드 전환">🌙</button>
+            <button class="hamburger" aria-label="메뉴 열기">☰</button>
+        </nav>
+    </header>
+
+    <!-- ============ 메인 콘텐츠 ============ -->
+    <main>
+
+        <!-- Hero 섹션 -->
+        <section id="hero">
+            <span class="emoji">👋</span>
+            <h2>안녕하세요, 000입니다</h2>
+            <p>p 태그 </p>
+            <a href="#projects" class="cta-button">구경하기</a>
+        </section>
+
+        <!-- About 섹션 -->
+        <section id="about">
+            <h2>About Me</h2>
+            <div>
+                <img src="images/profile.jpg" alt="프로필 사진">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+        </section>
+
+        <!-- Skills 섹션 -->
+        <section id="skills">
+            <h2>Skills</h2>
+            <ul class="skills-list">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+            </ul>
+        </section>
+
+        <!-- Projects 섹션 (GitHub API로 채워질 곳) -->
+        <section id="projects">
+            <h2>Projects</h2>
+            <div id="projects-container" class="projects-grid">
+                <!-- JS가 여기에 카드를 렌더링합니다(github api 사용시)-->
+                
+                <!-- 프로젝트 1 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/project1.jpg" alt="project 1">
+                    </div>
+                    <div class="project-content">
+                        <h3>project 1</h3>
+                        <p>반응형 포트폴리오 웹사이트. HTML, CSS, JavaScript를 활용한 개인 포트폴리오 프로젝트입니다.</p>
+                        <div class="project-tags">
+                            <span class="tag">HTML</span>
+                            <span class="tag">CSS</span>
+                            <span class="tag">JavaScript</span>
+                        </div>
+                        <a href="#" class="project-link">GitHub에서 보기 →</a>
+                    </div>
+                </div>
+
+                <!-- 프로젝트 2 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/project2.jpg" alt="project 2">
+                    </div>
+                    <div class="project-content">
+                        <h3>project 2</h3>
+                        <p>JavaScript로 만든 간단한 할일 관리 앱. 로컬스토리지를 활용해 데이터를 저장합니다.</p>
+                        <div class="project-tags">
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">LocalStorage</span>
+                        </div>
+                        <a href="#" class="project-link">GitHub에서 보기 →</a>
+                    </div>
+                </div>
+
+                <!-- 프로젝트 3 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/project3.jpg" alt="project 3">
+                    </div>
+                    <div class="project-content">
+                        <h3>project 3</h3>
+                        <p>OpenWeather API를 활용한 날씨 조회 앱. 현재 위치의 날씨 정보를 실시간으로 표시합니다.</p>
+                        <div class="project-tags">
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">API</span>
+                        </div>
+                        <a href="#" class="project-link">GitHub에서 보기 →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact 섹션 (문의 폼) -->
+        <section id="contact">
+            <h2>Contact</h2>
+            <form id="contact-form">
+                <div>
+                    <label for="name">이름</label>
+                    <input disabled type="text" id="name" name="name" required>
+                    <span class="error-message"></span>
+                </div>
+
+                <div>
+                    <label for="email">이메일</label>
+                    <input disabled type="email" id="email" name="email" required>
+                    <span class="error-message"></span>
+                </div>
+
+                <div>
+                    <label for="message">메시지</label>
+                    <textarea disabled id="message" name="message" required></textarea>
+                    <span class="error-message"></span>
+                </div>
+
+                <button type="submit" >보내기</button>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- ============ 푸터 ============ -->
+    <footer>
+        <p>&copy; 2026. All rights reserved.</p>
+        <ul class="social-links">
+            <li><a href="#" target="_blank" label="https://github.com/본인아이디">GitHub</a></li>
+            <li><a href="#">mailto:본인@email.com</a></li>
+        </ul>
+    </footer>
+
+    <!-- 스크롤 탑 버튼 -->
+    <button class="scroll-top" aria-label="맨 위로">↑</button>
+
+</body>
+</html>
