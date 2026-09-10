@@ -1,0 +1,116 @@
+/* ========================================
+   Contact 
+   ======================================== */
+   
+#contact {
+    padding: 80px 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#contact h2 {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    text-align: center;
+    color: var(--text-primary);
+}
+
+/* 폼 스타일 */
+#contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+#contact-form > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#contact-form label {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+#contact-form input,
+#contact-form textarea {
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+#contact-form input:focus,
+#contact-form textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+#contact-form textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+/* 에러 메시지 */
+.error-message {
+    color: #ef4444;
+    font-size: 0.85rem;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
+}
+
+/* 제출 버튼 */
+#contact-form button {
+    padding: 14px 30px;
+    background: linear-gradient(135deg, var(--accent-color), #2563eb) !important;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+#contact-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+}
+
+#contact-form button:active {
+    transform: translateY(0);
+}
+
+#contact-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    #contact {
+        padding: 60px 20px;
+    }
+
+    #contact h2 {
+        font-size: 2rem;
+    }
+
+    #contact-form input,
+    #contact-form textarea {
+        padding: 10px 12px;
+        font-size: 16px; /* 모바일에서 줌 방지 */
+    }
+}

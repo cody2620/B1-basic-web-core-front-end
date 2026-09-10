@@ -1,0 +1,53 @@
+/* ========================================
+   Footer
+   ======================================== */
+   
+footer {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    margin-top: 80px;
+}
+
+footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 소셜 링크 */
+footer .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+footer .social-links a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+footer .social-links a:hover {
+    color: var(--primary-color);
+}
+
+/* 저작권 */
+footer .copyright {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    footer {
+        padding: 30px 15px;
+    }
+    
+    footer .social-links {
+        gap: 15px;
+    }
+}
