@@ -113,3 +113,11 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* 데스크톱 (1024px 이상): 카드 최소 폭을 넓혀 한 줄에 더 여유 있게 배치 */
+@media (min-width: 1024px) {
+    .projects-grid {
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 40px;
+    }
+}
