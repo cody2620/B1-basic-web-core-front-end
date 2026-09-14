@@ -26,11 +26,11 @@
             <h1 class="nav-logo">Header</h1>
 
             <ul class="nav-menu">
-                <li><a href="nav-link">Home</a></li>
-                <li><a href="nav-link">About</a></li>
-                <li><a href="nav-link">Skills</a></li>
-                <li><a href="nav-link">Projects</a></li>
-                <li><a href="nav-link">Contact</a></li>
+                <li><a href="#hero" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
 
             <button class="theme-toggle" aria-label="다크모드 전환">🌙</button>
@@ -72,56 +72,7 @@
         <section id="projects">
             <h2>Projects</h2>
             <div id="projects-container" class="projects-grid">
-                <!-- JS가 여기에 카드를 렌더링합니다(github api 사용시)-->
-                
-                <!-- 프로젝트 1 -->
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/project1.jpg" alt="project 1">
-                    </div>
-                    <div class="project-content">
-                        <h3>project 1</h3>
-                        <p>반응형 포트폴리오 웹사이트. HTML, CSS, JavaScript를 활용한 개인 포트폴리오 프로젝트입니다.</p>
-                        <div class="project-tags">
-                            <span class="tag">HTML</span>
-                            <span class="tag">CSS</span>
-                            <span class="tag">JavaScript</span>
-                        </div>
-                        <a href="#" class="project-link">GitHub에서 보기 →</a>
-                    </div>
-                </div>
-
-                <!-- 프로젝트 2 -->
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/project2.jpg" alt="project 2">
-                    </div>
-                    <div class="project-content">
-                        <h3>project 2</h3>
-                        <p>JavaScript로 만든 간단한 할일 관리 앱. 로컬스토리지를 활용해 데이터를 저장합니다.</p>
-                        <div class="project-tags">
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">LocalStorage</span>
-                        </div>
-                        <a href="#" class="project-link">GitHub에서 보기 →</a>
-                    </div>
-                </div>
-
-                <!-- 프로젝트 3 -->
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/project3.jpg" alt="project 3">
-                    </div>
-                    <div class="project-content">
-                        <h3>project 3</h3>
-                        <p>OpenWeather API를 활용한 날씨 조회 앱. 현재 위치의 날씨 정보를 실시간으로 표시합니다.</p>
-                        <div class="project-tags">
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">API</span>
-                        </div>
-                        <a href="#" class="project-link">GitHub에서 보기 →</a>
-                    </div>
-                </div>
+                <!-- JS가 GitHub API 데이터를 받아 여기에 카드를 렌더링합니다 -->
             </div>
         </section>
 
@@ -131,23 +82,24 @@
             <form id="contact-form">
                 <div>
                     <label for="name">이름</label>
-                    <input disabled type="text" id="name" name="name" required>
+                    <input type="text" id="name" name="name" required>
                     <span class="error-message"></span>
                 </div>
 
                 <div>
                     <label for="email">이메일</label>
-                    <input disabled type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" required>
                     <span class="error-message"></span>
                 </div>
 
                 <div>
                     <label for="message">메시지</label>
-                    <textarea disabled id="message" name="message" required></textarea>
+                    <textarea id="message" name="message" required></textarea>
                     <span class="error-message"></span>
                 </div>
 
-                <button type="submit" >보내기</button>
+                <button type="submit">보내기</button>
+                <p class="form-success" hidden>메시지가 성공적으로 전송되었습니다!</p>
             </form>
         </section>
 
@@ -156,9 +108,10 @@
     <!-- ============ 푸터 ============ -->
     <footer>
         <p>&copy; 2026. All rights reserved.</p>
+        <!-- ⚠️ [깃허브 아이디 입력 필요] href의 "본인아이디"와 mailto의 "본인@email.com"을 실제 정보로 바꿔주세요. -->
         <ul class="social-links">
-            <li><a href="#" target="_blank" label="https://github.com/본인아이디">GitHub</a></li>
-            <li><a href="#">mailto:본인@email.com</a></li>
+            <li><a href="https://github.com/본인아이디" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="mailto:본인@email.com">Email</a></li>
         </ul>
     </footer>
 

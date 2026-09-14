@@ -1,5 +1,5 @@
 /* ========================================
-   1. CSS 변수 정의 (:root)
+   CSS 변수 정의 (:root)
    ======================================== */
    
 :root {
@@ -32,6 +32,19 @@
     --radius: 8px;
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --transition: 0.3s ease;
+
+    /* 섹션별 CSS(about/skills/projects/contact/footer)에서 쓰는 변수명 별칭
+       -> style.css의 :root 값만 바꾸면 전체 색상이 일괄 반영됨 */
+    --bg-primary: var(--color-bg);
+    --bg-secondary: var(--color-card-bg);
+    --bg-tertiary: var(--color-border);
+    --text-primary: var(--color-text);
+    --text-secondary: var(--color-text-sub);
+    --border-color: var(--color-border);
+    --primary-color: var(--color-primary);
+    --accent: var(--color-primary);
+    --accent-color: var(--color-primary);
+    --accent-dark: var(--color-primary-hover);
 }
 
 /* 다크 모드 변수 */
@@ -98,10 +111,13 @@ button {
     left: 0;
     width: 100%;
     background-color: var(--color-nav-bg);
+        -webkit-backdrop-filter: blur(10px); /* Safari 전용 접두사 (필수) */
     backdrop-filter: blur(10px);  /* 뒤 배경 흐릿하게 (요즘 트렌드!) */
     border-bottom: 1px solid var(--color-border);
     z-index: 1000;             /* 다른 요소 위에 표시 */
     transition: background-color var(--transition);
+        -webkit-transform: translateZ(0); /* Safari GPU 레이어 강제 분리 (blur+fixed 렌더링 버그 우회) */
+    transform: translateZ(0);
 }
 
 /* 네비게이션 - Flexbox 컨테이너 */
@@ -198,4 +214,109 @@ button {
     .nav {
         padding: var(--spacing-sm) var(--spacing-md);
     }
+
+    .nav-menu.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: var(--color-nav-bg);
+        padding: var(--spacing-sm) var(--spacing-md);
+        border-bottom: 1px solid var(--color-border);
+    }
+}
+
+/* ========================================
+   5-1. 반응형 디자인 (데스크톱, 1024px 이상)
+   ======================================== */
+@media (min-width: 1024px) {
+
+    /* 데스크톱에서는 좌우 여백을 조금 더 넓게 */
+    .nav {
+        padding: var(--spacing-sm) var(--spacing-lg);
+    }
+
+    /* main 섹션 전체 좌우 여백도 데스크톱 기준으로 확장 */
+    main section {
+        padding-left: var(--spacing-lg);
+        padding-right: var(--spacing-lg);
+    }
+}
+
+/* ========================================
+   6. 스크롤 시 헤더 스타일 변경 (60px 이상)
+   ======================================== */
+.header.scrolled {
+    background-color: var(--color-nav-bg);
+    box-shadow: var(--shadow);
+}
+
+/* ========================================
+   7. 스크롤 탑 버튼 (300px 이상에서 표시)
+   ======================================== */
+.scroll-top {
+    position: fixed;
+    right: var(--spacing-md);
+    bottom: var(--spacing-md);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: #fff;
+    font-size: var(--font-size-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity var(--transition), transform var(--transition), background-color var(--transition);
+    z-index: 900;
+}
+
+.scroll-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-top:hover {
+    background-color: var(--color-primary-hover);
+}
+
+/* ========================================
+   8. 스크롤 등장 애니메이션 (Intersection Observer)
+   ======================================== */
+main section {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+main section.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========================================
+   9. 폼 에러 / 성공 메시지 공통 스타일
+   ======================================== */
+.error-message {
+    display: block;
+    min-height: 1.2em;
+    color: #e53e3e;
+    font-size: var(--font-size-sm);
+    margin-top: 4px;
+}
+
+.form-success {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: #e6f9ee;
+    color: #1a7f4e;
+    border-radius: var(--radius);
+    font-weight: 600;
 }
