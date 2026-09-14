@@ -2,12 +2,32 @@
 
 ### 진도 및 현황
 - css 생성
-- 다음 작업: 자바스크립트 작업
+- 자바스크립트 작업
+- 콘텐츠 채우기, 배포 
 
 ### 개발환경
 - HTML, CSS, JavaScript
 
 ### 배포 url
+
+#
+### 오류 및 수정사항
+
+**[Safari] 헤더 상단에 흰 여백이 생기는 문제**
+
+<img width="1462" height="475" alt="사파리 여백" src="https://github.com/user-attachments/assets/7ec03a11-7444-48ad-86f7-acc83fd679a3" />
+
+- **증상**: Chrome에서는 정상인데, Safari에서만 고정 헤더(`.header`) 위쪽에 원인 모를 흰 여백이 생김.
+- **원인**: `.header`에 `position: fixed`와 `backdrop-filter: blur(10px)`(뒤 배경 흐림 효과)를 같이 쓰고 있었는데, Safari는 접두사 없는 `backdrop-filter`를 불안정하게 처리하고, `fixed` + `blur` 조합의 컴포지팅(레이어 그리기) 계산을 잘못해서 헤더 위에 빈 레이어 공간을 그려버림.
+- **해결**: `.header`에 아래 3줄 추가
+```css
+  -webkit-backdrop-filter: blur(10px); /* Safari 전용 접두사 */
+  -webkit-transform: translateZ(0);    /* GPU 레이어 강제 분리 */
+  transform: translateZ(0);
+```
+  - `-webkit-backdrop-filter`: Safari가 blur 효과를 표준 스펙처럼 안정적으로 처리하게 함
+  - `translateZ(0)`: 헤더를 독립된 GPU 레이어로 강제 분리시켜서, Safari가 레이어 경계를 잘못 계산하는 걸 우회
+- **교훈**: `backdrop-filter`처럼 최신 CSS 기능을 쓸 때는 Safari용 `-webkit-` 접두사를 항상 같이 넣고, `fixed` 요소에서 렌더링이 이상하면 `translateZ(0)`로 레이어를 분리해보는 게 기본 체크리스트.
 
 #
 ### 용어
