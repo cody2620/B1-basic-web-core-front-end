@@ -3,9 +3,9 @@
    ======================================== */
 
 #hero {
-    padding: 80px 20px;
+    padding: 60px 15px;
     text-align: center;
-    min-height: calc(100vh - 70px);  /* 헤더 높이 제외 */
+    min-height: calc(100vh - 60px);  /* 헤더 높이 제외 */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -14,19 +14,19 @@
 }
 
 #hero .emoji {
-    font-size: 3rem;
+    font-size: 2rem;
     margin-bottom: 10px;
 }
 
 #hero h2 {
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 700;
     margin-bottom: 20px;
     color: #000000;
 }
 
 #hero p {
-    font-size: 1.25rem;
+    font-size: 1rem;
     color: #666666;
     margin-bottom: 30px;
     max-width: 600px;
@@ -34,11 +34,12 @@
 
 #hero .cta-button {
     display: inline-block;
-    padding: 12px 30px;
+    padding: 10px 25px;
     background-color: #007bff;
     color: white;
     border-radius: 8px;
     font-weight: 600;
+    font-size: 0.95rem;
     text-decoration: none;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
@@ -49,29 +50,29 @@
 }
 
 /* ========================================
-   모바일 반응형 (768px 이하)
+   모바일 퍼스트: 768px 이상(태블릿/데스크톱) 확장
    ======================================== */
 
-@media (max-width: 768px) {
-    .hero {
-        padding: 60px 15px;
-        min-height: calc(100vh - 60px);
+@media (min-width: 768px) {
+    #hero {
+        padding: 80px 20px;
+        min-height: calc(100vh - 70px);
     }
 
-    .hero .emoji {
+    #hero .emoji {
+        font-size: 3rem;
+    }
+
+    #hero h2 {
         font-size: 2rem;
     }
 
-    .hero h1 {
-        font-size: 1.75rem;
+    #hero p {
+        font-size: 1.25rem;
     }
 
-    .hero p {
+    #hero .cta-button {
+        padding: 12px 30px;
         font-size: 1rem;
-    }
-
-    .hero .cta-button {
-        padding: 10px 25px;
-        font-size: 0.95rem;
     }
 }

@@ -3,23 +3,23 @@
    ======================================== */
    
 #projects {
-    padding: 80px 20px;
+    padding: 60px 15px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 #projects h2 {
-    font-size: 2.5rem;
-    margin-bottom: 50px;
+    font-size: 2rem;
+    margin-bottom: 30px;
     text-align: center;
     color: var(--text-primary);
 }
 
-/* 그리드 레이아웃 */
+/* 그리드 레이아웃 - 모바일 기본값: 1열 */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    grid-template-columns: 1fr;
+    gap: 20px;
 }
 
 /* 프로젝트 카드 */
@@ -103,14 +103,20 @@
     color: var(--accent-dark);
 }
 
-/* 반응형 */
-@media (max-width: 768px) {
+/* 모바일 퍼스트: 768px 이상(태블릿/데스크톱) 확장 */
+@media (min-width: 768px) {
+    #projects {
+        padding: 80px 20px;
+    }
+
     #projects h2 {
-        font-size: 2rem;
+        font-size: 2.5rem;
+        margin-bottom: 50px;
     }
 
     .projects-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
     }
 }
 

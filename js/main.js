@@ -183,7 +183,7 @@ const renderProjectsState = (state, data = []) => {
     // state === 'success' : repos 배열을 카드 HTML로 변환 (map + 템플릿 리터럴)
     const cardsHTML = data
         .map(({ name, description, html_url, language }) => `
-            <div class="project-card">
+            <article class="project-card">
                 <div class="project-content">
                     <h3>${name}</h3>
                     <p>${description ?? '설명이 없는 프로젝트입니다.'}</p>
@@ -192,7 +192,7 @@ const renderProjectsState = (state, data = []) => {
                     </div>
                     <a href="${html_url}" class="project-link" target="_blank" rel="noopener">GitHub에서 보기 →</a>
                 </div>
-            </div>
+            </article>
         `)
         .join('');
 
