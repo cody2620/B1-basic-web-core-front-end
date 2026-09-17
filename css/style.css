@@ -186,45 +186,50 @@ button {
     background-color: var(--color-border);
 }
 
-/* 햄버거 버튼 - 데스크톱에서는 숨김 */
+/* 햄버거 버튼 - 모바일 기본값: 보임 */
 .hamburger {
-    display: none;
+    display: block;
     font-size: var(--font-size-xl);
     color: var(--color-text);
 }
 
+/* 메뉴 - 모바일 기본값: 숨김 (JS로 open 클래스 토글) */
+.nav-menu {
+    display: none;
+}
+
+.nav-menu.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-nav-bg);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
 /* ========================================
-   5. 반응형 디자인 (모바일)
+   5. 반응형 디자인 (모바일 퍼스트: 768px부터 태블릿/데스크톱 확장)
    ======================================== */
 
-/* 768px 이하 (태블릿, 모바일) */
-@media (max-width: 768px) {
-    
-    /* 햄버거 버튼 표시 */
+/* 768px 이상 (태블릿, 데스크톱) */
+@media (min-width: 768px) {
+
+    /* 햄버거 버튼 숨김 */
     .hamburger {
-        display: block;  /* ← 모바일에서만 보임! */
+        display: none;
     }
 
-    /* 메뉴 숨김 (나중에 JS로 열기) */
+    /* 메뉴 항상 표시 (가로 배치) */
     .nav-menu {
-        display: none;  /* ← 기본적으로 숨김 */
-    }
-
-    /* 네비게이션 높이 조정 */
-    .nav {
-        padding: var(--spacing-sm) var(--spacing-md);
-    }
-
-    .nav-menu.open {
         display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        width: 100%;
-        background-color: var(--color-nav-bg);
-        padding: var(--spacing-sm) var(--spacing-md);
-        border-bottom: 1px solid var(--color-border);
+        position: static;
+        width: auto;
+        padding: 0;
+        border-bottom: none;
+        background-color: transparent;
     }
 }
 
