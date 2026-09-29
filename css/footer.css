@@ -41,12 +41,13 @@ footer .copyright {
     color: var(--text-secondary);
 }
 
-/* 모바일 퍼스트: 768px 이상(태블릿/데스크톱) 확장 */
+/* 768px 이상 (태블릿 이상: 여백과 간격 확대) */
 @media (min-width: 768px) {
     footer {
         padding: 40px 20px;
     }
 
+    /* 모바일에서는 gap 15px, 태블릿에서는 20px */
     footer .social-links {
         gap: 20px;
     }
