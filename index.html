@@ -20,9 +20,9 @@
 </head>
 <body>
 
-    <!-- ============ 헤더 (네비게이션) ============ -->
-    <header class="header">
-        <nav class="nav">
+    <!-- ============ 헤더 (사이트 주요 네비게이션) ============ -->
+    <header class="header" role="banner" aria-label="사이트 헤더">
+        <nav class="nav" role="navigation" aria-label="메인 네비게이션">
             <h1 class="nav-logo">Header</h1>
 
             <ul class="nav-menu">
@@ -33,24 +33,24 @@
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
 
-            <button class="theme-toggle" aria-label="다크모드 전환">🌙</button>
-            <button class="hamburger" aria-label="메뉴 열기">☰</button>
+            <button class="theme-toggle" aria-label="다크모드 전환" type="button" tabindex="0">🌙</button>
+            <button class="hamburger" aria-label="메뉴 열기" type="button" tabindex="0">☰</button>
         </nav>
     </header>
 
     <!-- ============ 메인 콘텐츠 ============ -->
-    <main>
+    <main role="main" aria-label="페이지 주요 콘텐츠">
 
-        <!-- Hero 섹션 -->
-        <section id="hero">
+        <!-- Hero 섹션: 인사말 및 CTA -->
+        <section id="hero" aria-label="소개 및 환영 섹션">
             <span class="emoji">👋</span>
             <h2>안녕하세요, 000입니다</h2>
             <p>p 태그 </p>
             <a href="#projects" class="cta-button">구경하기</a>
         </section>
 
-        <!-- About 섹션 -->
-        <section id="about">
+        <!-- About 섹션: 자기소개 -->
+        <section id="about" aria-label="자기소개 섹션">
             <h2>About Me</h2>
             <div>
                 <img src="images/profile.jpg" alt="프로필 사진">
@@ -58,8 +58,8 @@
             </div>
         </section>
 
-        <!-- Skills 섹션 -->
-        <section id="skills">
+        <!-- Skills 섹션: 기술 스택 -->
+        <section id="skills" aria-label="보유 기술 섹션">
             <h2>Skills</h2>
             <ul class="skills-list">
                 <li>HTML</li>
@@ -68,45 +68,45 @@
             </ul>
         </section>
 
-        <!-- Projects 섹션 (GitHub API로 채워질 곳) -->
-        <section id="projects">
+        <!-- Projects 섹션: GitHub API에서 동적으로 로드되는 프로젝트 목록 -->
+        <section id="projects" aria-label="프로젝트 목록 섹션">
             <h2>Projects</h2>
             <div id="projects-container" class="projects-grid">
                 <!-- JS가 GitHub API 데이터를 받아 여기에 카드를 렌더링합니다 -->
             </div>
         </section>
 
-        <!-- Contact 섹션 (문의 폼) -->
-        <section id="contact">
+        <!-- Contact 섹션: 문의 폼 -->
+        <section id="contact" aria-label="문의 폼 섹션">
             <h2>Contact</h2>
-            <form id="contact-form" novalidate>
+            <form id="contact-form" novalidate aria-label="문의 양식">
                 <div>
                     <label for="name">이름</label>
-                    <input type="text" id="name" name="name" required>
-                    <span class="error-message"></span>
+                    <input type="text" id="name" name="name" required aria-required="true">
+                    <span class="error-message" role="alert" aria-live="polite" aria-atomic="true"></span>
                 </div>
 
                 <div>
                     <label for="email">이메일</label>
-                    <input type="email" id="email" name="email" required>
-                    <span class="error-message"></span>
+                    <input type="email" id="email" name="email" required aria-required="true">
+                    <span class="error-message" role="alert" aria-live="polite" aria-atomic="true"></span>
                 </div>
 
                 <div>
                     <label for="message">메시지</label>
-                    <textarea id="message" name="message" required></textarea>
-                    <span class="error-message"></span>
+                    <textarea id="message" name="message" required aria-required="true"></textarea>
+                    <span class="error-message" role="alert" aria-live="polite" aria-atomic="true"></span>
                 </div>
 
                 <button type="submit">보내기</button>
-                <p class="form-success" hidden>메시지가 성공적으로 전송되었습니다!</p>
+                <p class="form-success" hidden role="status" aria-live="polite">메시지가 성공적으로 전송되었습니다!</p>
             </form>
         </section>
 
     </main>
 
-    <!-- ============ 푸터 ============ -->
-    <footer>
+    <!-- ============ 푸터: 사이트 정보 및 연락처 ============ -->
+    <footer role="contentinfo" aria-label="사이트 푸터">
         <p>&copy; 2026. All rights reserved.</p>
         <!-- ⚠️ [깃허브 아이디 입력 필요] href의 "본인아이디"와 mailto의 "본인@email.com"을 실제 정보로 바꿔주세요. -->
         <ul class="social-links">
@@ -115,8 +115,8 @@
         </ul>
     </footer>
 
-    <!-- 스크롤 탑 버튼 -->
-    <button class="scroll-top" aria-label="맨 위로">↑</button>
+    <!-- 스크롤 탑 버튼: 페이지 맨 위로 이동 (300px 이상 스크롤 시 표시) -->
+    <button class="scroll-top" aria-label="페이지 맨 위로 이동" type="button" tabindex="0">↑</button>
 
 </body>
 </html>
