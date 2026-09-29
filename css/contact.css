@@ -110,6 +110,108 @@
     }
 }
 
+/* 전송 상태 메시지 */
+.form-status {
+    margin-top: 20px;
+    min-height: 0;
+    transition: all 0.3s ease;
+}
+
+.form-status p,
+.form-status div {
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* 로딩 상태 */
+.form-loading {
+    background-color: #fef3c7;
+    color: #92400e;
+    border-left: 4px solid #f59e0b;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* 성공 상태 */
+.form-success {
+    background-color: #dcfce7;
+    color: #166534;
+    border-left: 4px solid #22c55e;
+    font-weight: 500;
+}
+
+/* 실패 상태 */
+.form-error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-left: 4px solid #ef4444;
+}
+
+.form-error p {
+    margin: 0;
+    padding: 0;
+}
+
+.form-error p:first-child {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.error-reason {
+    font-size: 0.85rem;
+    color: #7f1d1d;
+    margin-bottom: 12px;
+}
+
+/* 재시도 버튼 */
+.retry-button {
+    padding: 8px 16px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.retry-button:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+}
+
+.retry-button:active {
+    transform: translateY(0);
+}
+
+/* 다크 모드 */
+[data-theme="dark"] .form-loading {
+    background-color: #78350f;
+    color: #fef3c7;
+}
+
+[data-theme="dark"] .form-success {
+    background-color: #064e3b;
+    color: #dcfce7;
+}
+
+[data-theme="dark"] .form-error {
+    background-color: #7f1d1d;
+    color: #fee2e2;
+}
+
+[data-theme="dark"] .error-reason {
+    color: #fca5a5;
+}
+
 /* 데스크톱 (1024px 이상): 섹션 제목을 더 크게 */
 @media (min-width: 1024px) {
     #contact h2 {
