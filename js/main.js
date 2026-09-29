@@ -11,11 +11,24 @@
    - form: 폼 입력 상태 및 에러
      * errors: { name: string, email: string, message: string }
    ======================================== */
+// 초기 테마 결정: 저장된 설정 → OS 선호도 → 기본값 'light'
+const getInitialTheme = () => {
+    const saved = localStorage.getItem('theme');
+    if (saved) return saved;
+
+    // 사용자의 OS 다크모드 선호도 감지
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+    }
+    return 'light';
+};
+
 const STATE = {
-    // 테마: 기본값 'light'로 설정
-    // 의도: 대부분 사용자가 밝은 모드를 선호하고, 다크모드는 사용자 설정 시에만 적용
-    // 로직: 로컬스토리지에 저장된 테마가 있으면 그것을 사용, 없으면 'light' 기본값
-    theme: localStorage.getItem('theme') || 'light',
+    // 테마: 3단계 우선순위
+    // 1순위: localStorage 저장 설정 (사용자 선택 존중)
+    // 2순위: 시스템 색상 선호도 (prefers-color-scheme)
+    // 3순위: 기본값 'light'
+    theme: getInitialTheme(),
     projects: {
         state: 'loading', // 초기 상태: 페이지 로드 시 GitHub API 요청 중
         data: []
@@ -33,8 +46,17 @@ const STATE = {
 const themeToggle = document.querySelector('.theme-toggle');
 
 // 상태 -> 렌더링: STATE의 theme 값을 받아 실제 화면(html data-theme, 버튼 아이콘)에 반영
-const renderTheme = () => {
+const renderTheme = (animate = false) => {
     const theme = STATE.theme;
+
+    // 테마 변경 애니메이션: 버튼에 회전 효과 추가
+    if (animate) {
+        themeToggle.style.transform = 'rotate(180deg)';
+        setTimeout(() => {
+            themeToggle.style.transform = 'rotate(0deg)';
+        }, 300);
+    }
+
     if (theme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         themeToggle.textContent = '☀️';
@@ -44,14 +66,17 @@ const renderTheme = () => {
     }
 };
 
-// 페이지 로드 시 저장된 테마 적용
-renderTheme();
+// 페이지 로드 시 저장된 테마 적용 (애니메이션 없음)
+renderTheme(false);
+
+// 토글 버튼에 transition 스타일 추가 (부드러운 회전)
+themeToggle.style.transition = 'transform 0.3s ease';
 
 themeToggle.addEventListener('click', () => {
-    // 사용자 이벤트 -> 상태 변경 -> 화면 업데이트
+    // 사용자 이벤트 -> 상태 변경 -> 화면 업데이트 (애니메이션 포함)
     STATE.theme = STATE.theme === 'dark' ? 'light' : 'dark';
     localStorage.setItem('theme', STATE.theme);
-    renderTheme();
+    renderTheme(true);
 });
 
 // 키보드 접근성: Enter/Space 키로도 테마 토글 가능 (click 이벤트와 동일)
@@ -59,6 +84,17 @@ themeToggle.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         themeToggle.click();
+    }
+});
+
+// 시스템 다크모드 설정 변경 감지
+// 사용자가 OS에서 다크모드를 켜거나 끄면 자동으로 테마 전환
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    // localStorage에 저장된 선택이 없는 경우만 자동 변경
+    // (사용자가 명시적으로 설정한 테마 선호도는 존중)
+    if (!localStorage.getItem('theme')) {
+        STATE.theme = e.matches ? 'dark' : 'light';
+        renderTheme(false);
     }
 });
 
@@ -156,15 +192,24 @@ const revealObserver = new IntersectionObserver(
 revealSections.forEach((section) => revealObserver.observe(section));
 
 
-// ===== 6. Contact 폼 유효성 검사 =====
+// ===== 6. Contact 폼 (검증 + 서버 전송) =====
 const contactForm = document.querySelector('#contact-form');
 const nameInput = document.querySelector('#name');
 const emailInput = document.querySelector('#email');
 const messageInput = document.querySelector('#message');
+const submitBtn = document.querySelector('#submit-btn');
+const formLoading = document.querySelector('.form-loading');
 const formSuccess = document.querySelector('.form-success');
+const formError = document.querySelector('.form-error');
+const errorReason = document.querySelector('.error-reason');
+const retryBtn = document.querySelector('#retry-btn');
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const formInputs = [nameInput, emailInput, messageInput];
+
+// STATE에 폼 전송 상태 추가
+STATE.form.status = 'idle'; // idle | loading | success | error
+STATE.form.lastSubmitData = null; // 재시도를 위해 마지막 제출 데이터 저장
 
 // 필드 하나의 유효성을 검증하고 STATE.form.errors 업데이트
 const validateField = (input) => {
@@ -178,12 +223,11 @@ const validateField = (input) => {
         errorText = '올바른 이메일 형식이 아닙니다.';
     }
 
-    // 상태 변경: STATE.form.errors[fieldId] 업데이트
     STATE.form.errors[id] = errorText;
     return errorText === '';
 };
 
-// 상태 -> 렌더링: STATE.form.errors를 화면에 반영
+// 상태 -> 렌더링: 폼 입력 필드 에러 표시
 const renderFormErrors = () => {
     formInputs.forEach((input) => {
         const errorEl = input.nextElementSibling;
@@ -192,7 +236,22 @@ const renderFormErrors = () => {
     });
 };
 
-// forEach: 각 입력 필드에 'input' 이벤트 리스너 등록
+// 상태 -> 렌더링: 폼 전송 상태 표시 (로딩/성공/실패)
+const renderFormStatus = () => {
+    const status = STATE.form.status;
+    const isSubmitting = status === 'loading';
+
+    // 상태별 메시지 표시
+    formLoading.hidden = status !== 'loading';
+    formSuccess.hidden = status !== 'success';
+    formError.hidden = status !== 'error';
+
+    // 제출 중에는 버튼과 입력 필드 비활성화
+    submitBtn.disabled = isSubmitting;
+    formInputs.forEach(input => input.disabled = isSubmitting);
+};
+
+// 폼 입력 필드의 'input' 이벤트 리스너
 formInputs.forEach((input) => {
     input.addEventListener('input', () => {
         validateField(input);
@@ -200,11 +259,60 @@ formInputs.forEach((input) => {
     });
 });
 
-contactForm.addEventListener('submit', (event) => {
+// HTTP 상태코드별 사용자 친화적 에러 메시지
+const HTTP_ERROR_MESSAGES = {
+    400: '요청이 잘못되었습니다. 입력 내용을 다시 확인해주세요.',
+    401: '인증이 필요합니다. 로그인 후 다시 시도해주세요.',
+    403: '요청할 수 없습니다. 권한이 없거나 사이트 설정 문제입니다.',
+    404: '서버를 찾을 수 없습니다. 나중에 다시 시도해주세요.',
+    429: '요청이 너무 많습니다. 30초 후 다시 시도해주세요.',
+    500: '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+    502: '서버가 응답하지 않습니다. 잠시 후 다시 시도해주세요.',
+    503: '서버가 현재 사용 불가능합니다. 잠시 후 다시 시도해주세요.',
+};
+
+// 폼 데이터를 서버로 전송하는 비동기 함수
+const submitForm = async (formData) => {
+    const timeoutMs = 5000; // 5초 타임아웃
+
+    try {
+        // AbortController로 타임아웃 처리
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+        const response = await fetch('/api/contact', {
+            method: 'POST',
+            body: formData,
+            signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+            const status = response.status;
+            const errorMessage = HTTP_ERROR_MESSAGES[status] || `서버 오류 (상태 코드: ${status})`;
+            throw new Error(errorMessage);
+        }
+
+        return await response.json();
+    } catch (error) {
+        // 타임아웃 처리
+        if (error.name === 'AbortError') {
+            throw new Error('요청 시간 초과 (5초). 인터넷 연결을 확인해주세요.');
+        }
+        // TypeError: fetch 실패 (네트워크 오류)
+        if (error instanceof TypeError) {
+            throw new Error('네트워크 오류: 인터넷 연결을 확인해주세요.');
+        }
+        throw error;
+    }
+};
+
+// 폼 제출 이벤트
+contactForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    // map: 각 필드를 검증하고 유효성 여부 배열로 변환
-    // every: 배열의 모든 값이 true여야 통과 (하나라도 false면 false)
+    // 1단계: 필드 검증
     const isAllValid = formInputs
         .map((input) => validateField(input))
         .every((valid) => valid);
@@ -212,20 +320,51 @@ contactForm.addEventListener('submit', (event) => {
     renderFormErrors();
 
     if (!isAllValid) {
-        // 유효하지 않은 첫 번째 필드로 포커스 이동
         const firstInvalidField = formInputs.find((input) => STATE.form.errors[input.id]);
         if (firstInvalidField) {
             firstInvalidField.focus();
         }
-        formSuccess.hidden = true;
         return;
     }
 
-    // 성공 상태: 폼 리셋 및 에러 초기화
-    formSuccess.hidden = false;
-    contactForm.reset();
-    STATE.form.errors = { name: '', email: '', message: '' };
-    renderFormErrors();
+    // 2단계: 로딩 상태 표시
+    STATE.form.status = 'loading';
+    renderFormStatus();
+
+    // 3단계: 폼 데이터 생성 및 저장 (재시도용)
+    const formData = new FormData(contactForm);
+    STATE.form.lastSubmitData = formData;
+
+    try {
+        // 4단계: 서버 전송
+        await submitForm(formData);
+
+        // 5단계: 성공
+        STATE.form.status = 'success';
+        renderFormStatus();
+        contactForm.reset();
+        STATE.form.errors = { name: '', email: '', message: '' };
+        renderFormErrors();
+
+        // 5초 후 자동으로 성공 메시지 숨김
+        setTimeout(() => {
+            STATE.form.status = 'idle';
+            renderFormStatus();
+        }, 5000);
+
+    } catch (error) {
+        // 실패: 에러 메시지와 함께 상태 변경
+        STATE.form.status = 'error';
+        errorReason.textContent = error.message;
+        renderFormStatus();
+    }
+});
+
+// 재시도 버튼
+retryBtn.addEventListener('click', () => {
+    if (STATE.form.lastSubmitData) {
+        contactForm.dispatchEvent(new Event('submit'));
+    }
 });
 
 

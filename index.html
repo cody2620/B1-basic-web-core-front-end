@@ -98,8 +98,22 @@
                     <span class="error-message" role="alert" aria-live="polite" aria-atomic="true"></span>
                 </div>
 
-                <button type="submit">보내기</button>
-                <p class="form-success" hidden role="status" aria-live="polite">메시지가 성공적으로 전송되었습니다!</p>
+                <button type="submit" id="submit-btn">보내기</button>
+
+                <!-- 전송 상태 메시지 -->
+                <div class="form-status">
+                    <p class="form-loading" hidden role="status" aria-live="polite" aria-atomic="true">
+                        ⏳ 메시지를 전송 중입니다...
+                    </p>
+                    <p class="form-success" hidden role="status" aria-live="polite" aria-atomic="true">
+                        ✅ 메시지가 성공적으로 전송되었습니다!
+                    </p>
+                    <div class="form-error" hidden role="alert" aria-live="assertive" aria-atomic="true">
+                        <p>❌ 메시지 전송에 실패했습니다.</p>
+                        <p class="error-reason"></p>
+                        <button type="button" id="retry-btn" class="retry-button">재시도</button>
+                    </div>
+                </div>
             </form>
         </section>
 

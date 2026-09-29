@@ -76,6 +76,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* 테마 변경 시 부드러운 색상 전환 */
+    transition: background-color var(--transition), color var(--transition), border-color var(--transition);
 }
 
 /* ========================================
