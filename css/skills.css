@@ -48,10 +48,7 @@
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* ========================================
-   모바일 퍼스트: 768px 이상(태블릿/데스크톱) 확장
-   ======================================== */
-
+/* 768px 이상 (태블릿 이상: 스킬 카드 더 크게 배치) */
 @media (min-width: 768px) {
     #skills {
         padding: 80px 20px;
@@ -62,6 +59,7 @@
         margin-bottom: 50px;
     }
 
+    /* 모바일 minmax(120px)에서 태블릿 minmax(150px)로 확대 */
     .skills-list {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 20px;
