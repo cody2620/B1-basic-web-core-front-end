@@ -103,7 +103,7 @@
     color: var(--accent-dark);
 }
 
-/* 모바일 퍼스트: 768px 이상(태블릿/데스크톱) 확장 */
+/* 768px 이상 (태블릿 이상: 1열 → 다중 열로 확장) */
 @media (min-width: 768px) {
     #projects {
         padding: 80px 20px;
@@ -114,14 +114,16 @@
         margin-bottom: 50px;
     }
 
+    /* 카드를 2~3개 한 줄에 배치 (카드 최소 300px) */
     .projects-grid {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 30px;
     }
 }
 
-/* 데스크톱 (1024px 이상): 카드 최소 폭을 넓혀 한 줄에 더 여유 있게 배치 */
+/* 1024px 이상 (데스크톱: 카드 최소 폭 증가로 더 여유 있는 배치) */
 @media (min-width: 1024px) {
+    /* 카드 최소 폭을 340px로 늘려서 한 줄 카드 수 조정 */
     .projects-grid {
         grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
         gap: 40px;
