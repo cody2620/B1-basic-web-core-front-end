@@ -11,12 +11,13 @@
    - form: 폼 입력 상태 및 에러
      * errors: { name: string, email: string, message: string }
    ======================================== */
-// 초기 테마 결정: 저장된 설정 → OS 선호도 → 기본값 'light'
+// 초기 테마 결정: 세션 중 사용자 선택 > 시스템 모드
 const getInitialTheme = () => {
-    const saved = localStorage.getItem('theme');
-    if (saved) return saved;
+    // 1순위: sessionStorage (새로고침 후에도 유지, 탭 닫으면 삭제)
+    const sessionTheme = sessionStorage.getItem('theme');
+    if (sessionTheme) return sessionTheme;
 
-    // 사용자의 OS 다크모드 선호도 감지
+    // 2순위: 시스템 모드 (새 탭/창에서는 시스템 따라감)
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         return 'dark';
     }
@@ -24,10 +25,9 @@ const getInitialTheme = () => {
 };
 
 const STATE = {
-    // 테마: 3단계 우선순위
-    // 1순위: localStorage 저장 설정 (사용자 선택 존중)
-    // 2순위: 시스템 색상 선호도 (prefers-color-scheme)
-    // 3순위: 기본값 'light'
+    // 테마: 시스템 모드를 기본으로 따라감
+    // 사용자가 토글하면 sessionStorage에 저장 (새로고침 후에도 유지)
+    // 탭을 닫으면 sessionStorage 자동 삭제 → 다음 탭은 시스템 모드 따라감
     theme: getInitialTheme(),
     projects: {
         state: 'loading', // 초기 상태: 페이지 로드 시 GitHub API 요청 중
@@ -75,7 +75,7 @@ themeToggle.style.transition = 'transform 0.3s ease';
 themeToggle.addEventListener('click', () => {
     // 사용자 이벤트 -> 상태 변경 -> 화면 업데이트 (애니메이션 포함)
     STATE.theme = STATE.theme === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('theme', STATE.theme);
+    sessionStorage.setItem('theme', STATE.theme); // 세션 동안 저장 (새로고침 후에도 유지)
     renderTheme(true);
 });
 
@@ -88,11 +88,10 @@ themeToggle.addEventListener('keydown', (e) => {
 });
 
 // 시스템 다크모드 설정 변경 감지
-// 사용자가 OS에서 다크모드를 켜거나 끄면 자동으로 테마 전환
+// 사용자가 토글 버튼으로 선택하지 않은 경우만 시스템 모드를 따라감
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    // localStorage에 저장된 선택이 없는 경우만 자동 변경
-    // (사용자가 명시적으로 설정한 테마 선호도는 존중)
-    if (!localStorage.getItem('theme')) {
+    // sessionStorage에 저장된 선택이 없는 경우만 시스템 모드 변경 반영
+    if (!sessionStorage.getItem('theme')) {
         STATE.theme = e.matches ? 'dark' : 'light';
         renderTheme(false);
     }
@@ -369,8 +368,7 @@ retryBtn.addEventListener('click', () => {
 
 
 // ===== 7. GitHub API 연동 (Projects 섹션) =====
-// ⚠️ [깃허브 아이디 입력 필요] 'octocat' 자리를 본인 GitHub 아이디로 바꿔주세요.
-const GITHUB_USERNAME = 'octocat';
+const GITHUB_USERNAME = 'cody2620';
 const projectsContainer = document.querySelector('#projects-container');
 
 // 상태 -> 렌더링: STATE.projects의 상태에 따라 Projects 섹션을 다시 그림
