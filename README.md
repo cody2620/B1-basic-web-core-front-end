@@ -1,23 +1,23 @@
 # 나를 소개하는 웹페이지
 
-## 📌 프로젝트 설명
+### 📌 프로젝트 설명
 반응형 포트폴리오 웹사이트입니다. HTML, CSS, JavaScript를 사용하여 구축하였고 **GitHub API 연동**으로 실시간 저장소를 표시합니다. 
 다크모드, 부드러운 스크롤 애니메이션, 폼 검증 등 다양한 인터랙션을 구현했습니다.
 
-### 진도 및 현황
+### 📌 진도 및 현황
 - ✅ HTML 구조 (시맨틱 마크업)
 - ✅ CSS 스타일링 (반응형, 다크모드)
 - ✅ JavaScript 인터랙션 (DOM, 이벤트, 비동기)
 - ✅ GitHub API 연동
 - ✅ 배포 (예정)
 
-### 사용 기술
+### 📌 사용 기술
 - **HTML5**: 시맨틱 마크업 (`<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`)
 - **CSS3**: Flexbox, Grid, CSS 변수, 반응형 디자인 (모바일 퍼스트)
 - **JavaScript (ES6+)**: DOM 조작, 비동기 처리 (`async/await`), 상태 관리, API 연동
 - **GitHub API**: 저장소 데이터 동적 로드
 
-### 주요 기능
+### 📌 주요 기능
 - ⛵ Hero 섹션: 인사말 + CTA 버튼
 - 👤 About: 프로필 이미지 + 자기소개
 - 🛠️ Skills: 기술 스택
@@ -27,8 +27,20 @@
 - 📱 반응형 레이아웃: 모바일/태블릿/데스크톱 최적화
 - ⚡ 스크롤 인터랙션: 부드러운 스크롤, 스크롤 탑 버튼, 헤더 변경, 스크롤 애니메이션
 
-### 배포 URL
+### 📌 배포 URL
 - GitHub Pages: https://cody2620.github.io/B1-basic-web-core-front-end/
+
+### 📌 상황 별 캡쳐
+- 데스크탑
+<img width="1292" height="874" alt="데스크탑" src="https://github.com/user-attachments/assets/b52fd660-cb30-4222-a5a2-3f23fb3b2e41" />
+<br><br>
+
+- 데스크탑 - 다크모드
+<img width="1292" height="874" alt="다크모드" src="https://github.com/user-attachments/assets/0f83479c-7a01-4e29-9895-8d05701bd36c" />
+<br><br>
+
+- 모바일
+<img width="402" height="875" alt="모바일" src="https://github.com/user-attachments/assets/b9bd91d2-050c-4ad1-a9ee-320b173cfc77" />
 
 #
 ### 오류 및 수정사항
