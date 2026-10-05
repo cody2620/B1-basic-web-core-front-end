@@ -70,6 +70,15 @@
         <!-- Projects 섹션: GitHub API에서 동적으로 로드되는 프로젝트 목록 -->
         <section id="projects" aria-label="프로젝트 목록 섹션">
             <h2>Projects</h2>
+
+            <!-- 스킬스택 필터 -->
+            <div class="projects-filter" role="group" aria-label="스킬스택 필터">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <div id="filter-buttons-container" class="filter-buttons-container">
+                    <!-- JS가 GitHub API에서 언어 데이터를 받아 동적으로 필터 버튼을 생성합니다 -->
+                </div>
+            </div>
+
             <div id="projects-container" class="projects-grid">
                 <!-- JS가 GitHub API 데이터를 받아 여기에 카드를 렌더링합니다 -->
             </div>
