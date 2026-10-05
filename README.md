@@ -89,6 +89,11 @@
      const targetId = link.getAttribute('href');
      ```
 
+- DOM 객체의 메서드
+  1. querySelector() : 조건에 맞는 단일 요소 가져오기. 여러개인 경우 제일 첫번째만 선택.
+  2. querySelectorAll() : 조건에 맞는 모든 요소들 가져오기(list). 목록이라 반복문(forEach) 없이는 이벤트를 연결할 수 없다.
+  
+
 # 
 <details>
  
