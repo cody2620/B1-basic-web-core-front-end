@@ -31,7 +31,9 @@ const STATE = {
     theme: getInitialTheme(),
     projects: {
         state: 'loading', // 초기 상태: 페이지 로드 시 GitHub API 요청 중
-        data: []
+        data: [],
+        allLanguages: [], // 모든 프로젝트의 언어 목록
+        selectedFilter: 'all' // 선택된 필터 ('all' 또는 언어명)
     },
     form: {
         errors: {
@@ -370,10 +372,55 @@ retryBtn.addEventListener('click', () => {
 // ===== 7. GitHub API 연동 (Projects 섹션) =====
 const GITHUB_USERNAME = 'cody2620';
 const projectsContainer = document.querySelector('#projects-container');
+const filterButtonsContainer = document.querySelector('#filter-buttons-container');
+const filterBtns = document.querySelectorAll('.filter-btn');
+
+// 모든 언어를 추출하여 필터 버튼 생성
+const renderFilterButtons = () => {
+    const languages = STATE.projects.allLanguages;
+
+    const buttonsHTML = languages
+        .map(lang => `<button class="filter-btn" data-filter="${lang}">${lang}</button>`)
+        .join('');
+
+    filterButtonsContainer.innerHTML = buttonsHTML;
+
+    // 새로 생성된 필터 버튼들에 이벤트 리스너 추가
+    const newFilterBtns = document.querySelectorAll('.filter-btn');
+    newFilterBtns.forEach(btn => {
+        btn.addEventListener('click', handleFilterChange);
+    });
+};
+
+// 필터 버튼 클릭 이벤트 처리
+const handleFilterChange = (event) => {
+    const selectedFilter = event.target.getAttribute('data-filter');
+    STATE.projects.selectedFilter = selectedFilter;
+
+    // 모든 필터 버튼에서 active 클래스 제거
+    filterBtns.forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+
+    // 선택된 버튼에만 active 클래스 추가
+    document.querySelector(`[data-filter="${selectedFilter}"]`).classList.add('active');
+
+    renderProjects();
+};
+
+// 필터된 프로젝트 데이터 반환
+const getFilteredProjects = () => {
+    const { data, selectedFilter } = STATE.projects;
+
+    if (selectedFilter === 'all') {
+        return data;
+    }
+
+    return data.filter(project => project.language === selectedFilter);
+};
 
 // 상태 -> 렌더링: STATE.projects의 상태에 따라 Projects 섹션을 다시 그림
 const renderProjects = () => {
-    const { state, data } = STATE.projects;
+    const { state } = STATE.projects;
 
     if (state === 'loading') {
         projectsContainer.innerHTML = `<p class="projects-status">로딩 중...</p>`;
@@ -392,7 +439,9 @@ const renderProjects = () => {
         return;
     }
 
-    if (state === 'empty') {
+    const filteredData = getFilteredProjects();
+
+    if (filteredData.length === 0) {
         projectsContainer.innerHTML = `<p class="projects-status">표시할 프로젝트가 없습니다.</p>`;
         return;
     }
@@ -400,7 +449,7 @@ const renderProjects = () => {
     // state === 'success': GitHub 저장소 데이터를 HTML 카드로 변환
     // map: 각 repo 객체를 HTML 문자열로 변환
     // join: 배열의 HTML 문자열들을 하나의 문자열로 연결
-    const cardsHTML = data
+    const cardsHTML = filteredData
         .map(({ name, description, html_url, language }) => `
             <article class="project-card">
                 <div class="project-content">
@@ -417,6 +466,20 @@ const renderProjects = () => {
 
     projectsContainer.innerHTML = cardsHTML;
 };
+
+// 모든 프로젝트에서 고유한 언어 추출
+const extractLanguages = (projects) => {
+    const languages = new Set();
+    projects.forEach(project => {
+        if (project.language) {
+            languages.add(project.language);
+        }
+    });
+    return Array.from(languages).sort();
+};
+
+// All 버튼 초기 이벤트 리스너
+document.querySelector('[data-filter="all"]').addEventListener('click', handleFilterChange);
 
 // fetch + async/await로 GitHub repos 호출, 최대 2회 재시도
 async function loadProjects() {
@@ -441,6 +504,11 @@ async function loadProjects() {
 
             STATE.projects.state = ownRepos.length === 0 ? 'empty' : 'success';
             STATE.projects.data = ownRepos;
+
+            // 모든 언어 추출 및 필터 버튼 생성
+            STATE.projects.allLanguages = extractLanguages(ownRepos);
+            renderFilterButtons();
+
             renderProjects();
             return;
         } catch (error) {
