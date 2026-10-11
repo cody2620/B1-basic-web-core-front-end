@@ -529,3 +529,31 @@ async function loadProjects() {
 }
 
 loadProjects();
+
+// ===== 타이핑 효과 =====
+const initTypewriterEffect = () => {
+    const heroTitle = document.querySelector('#hero h2');
+    if (!heroTitle) return;
+
+    const fullText = heroTitle.textContent;
+    let currentIndex = 0;
+
+    heroTitle.textContent = '';
+
+    const typeNextCharacter = () => {
+        if (currentIndex < fullText.length) {
+            heroTitle.textContent += fullText[currentIndex];
+            currentIndex++;
+            setTimeout(typeNextCharacter, 140);
+        }
+    };
+
+    typeNextCharacter();
+};
+
+// 페이지 로드 후 타이핑 효과 시작
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTypewriterEffect);
+} else {
+    initTypewriterEffect();
+}
