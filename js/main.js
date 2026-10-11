@@ -531,29 +531,56 @@ async function loadProjects() {
 loadProjects();
 
 // ===== 타이핑 효과 =====
-const initTypewriterEffect = () => {
+const initTypewriterEffect = (onComplete) => {
     const heroTitle = document.querySelector('#hero h2');
     if (!heroTitle) return;
 
-    const fullText = heroTitle.textContent;
-    let currentIndex = 0;
+    const fullText = heroTitle.textContent.trim();
+    let currentText = '';
 
-    heroTitle.textContent = '';
+    heroTitle.innerHTML = '<span class="typewriter-text"></span><span class="typewriter-cursor">|</span>';
+    const textEl   = heroTitle.querySelector('.typewriter-text');
+    const cursorEl = heroTitle.querySelector('.typewriter-cursor');
 
     const typeNextCharacter = () => {
-        if (currentIndex < fullText.length) {
-            heroTitle.textContent += fullText[currentIndex];
-            currentIndex++;
+        if (currentText.length < fullText.length) {
+            currentText += fullText[currentText.length];
+            textEl.textContent = currentText;
             setTimeout(typeNextCharacter, 140);
+        } else {
+            cursorEl.classList.add('typewriter-cursor--done');
+            cursorEl.addEventListener('animationend', () => {
+                cursorEl.classList.add('typewriter-cursor--hidden');
+                onComplete && onComplete();
+            }, { once: true });
         }
     };
 
     typeNextCharacter();
 };
 
-// 페이지 로드 후 타이핑 효과 시작
+// ===== p 태그 물결 애니메이션 =====
+const initWaveText = () => {
+    const heroSub = document.querySelector('#hero p');
+    if (!heroSub) return;
+
+    const text = heroSub.textContent;
+    heroSub.innerHTML = '';
+
+    text.split('').forEach((ch, i) => {
+        const span = document.createElement('span');
+        span.className = 'wave-char';
+        span.textContent = ch === ' ' ? ' ' : ch;
+        span.style.setProperty('--i', i);
+        heroSub.appendChild(span);
+    });
+};
+
+// 타이핑 완료 → 커서 사라짐 → 물결 시작
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTypewriterEffect);
+    document.addEventListener('DOMContentLoaded', () => {
+        initTypewriterEffect(initWaveText);
+    });
 } else {
-    initTypewriterEffect();
+    initTypewriterEffect(initWaveText);
 }

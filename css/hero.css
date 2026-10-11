@@ -1,5 +1,5 @@
 /* ========================================
-   Hero 
+   Hero
    ======================================== */
 
 #hero {
@@ -30,6 +30,8 @@
     color: #666666;
     margin-bottom: 30px;
     max-width: 600px;
+    min-height: 1.6em;
+    line-height: 1.6;
 }
 
 #hero .cta-button {
@@ -47,6 +49,47 @@
 #hero .cta-button:hover {
     background-color: #0056b3;
     transform: translateY(-2px);
+}
+
+/* 물결 글자 애니메이션 */
+.wave-char {
+    display: inline-block;
+    animation: wave-float 2s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.08s);
+}
+
+@keyframes wave-float {
+    0%, 100% { transform: translateY(2px); }
+    50%       { transform: translateY(-2px); }
+}
+
+/* 타이핑 커서 */
+.typewriter-cursor {
+    display: inline-block;
+    font-weight: 300;
+    color: #555;
+    animation: blink 0.8s step-end infinite;
+    margin-left: 2px;
+    position: relative;
+    bottom: 0.05em;
+}
+
+.typewriter-cursor--done {
+    animation: blink-out 0.8s step-end 5 forwards;
+}
+
+.typewriter-cursor--hidden {
+    visibility: hidden;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+@keyframes blink-out {
+    0%        { opacity: 1; }
+    50%, 100% { opacity: 0; }
 }
 
 /* 768px 이상 (태블릿 이상: 폰트와 간격 확대) */

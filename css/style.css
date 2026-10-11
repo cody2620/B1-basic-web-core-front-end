@@ -23,7 +23,7 @@
     --color-primary-hover: #4338ca;
     --color-border: #e5e7eb;
     --color-card-bg: #ffffff;
-    --color-nav-bg: rgba(255, 255, 255, 0.9);
+    --color-nav-bg: rgba(255, 255, 255, 0.15);
 
     /* 폰트 */
     --font-main: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -66,7 +66,7 @@
     --color-text-sub: #aaaaaa;
     --color-border: #333333;
     --color-card-bg: #2a2a2a;
-    --color-nav-bg: rgba(26, 26, 26, 0.9);
+    --color-nav-bg: rgba(26, 26, 26, 0.2);
 }
 
 /* ========================================
@@ -125,9 +125,10 @@ button {
     left: 0;
     width: 100%;
     background-color: var(--color-nav-bg);
-        -webkit-backdrop-filter: blur(10px); /* Safari 전용 접두사 (필수) */
-    backdrop-filter: blur(10px);  /* 뒤 배경 흐릿하게 (요즘 트렌드!) */
-    border-bottom: 1px solid var(--color-border);
+        -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
     z-index: 1000;             /* 다른 요소 위에 표시 */
     transition: background-color var(--transition);
         -webkit-transform: translateZ(0); /* Safari GPU 레이어 강제 분리 (blur+fixed 렌더링 버그 우회) */
