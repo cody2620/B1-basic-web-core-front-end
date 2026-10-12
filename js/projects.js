@@ -90,9 +90,42 @@ const extractLanguages = (projects) => {
 
 document.querySelector('[data-filter="all"]').addEventListener('click', handleFilterChange);
 
+const CACHE_KEY = 'github_repos_cache';
+const CACHE_TTL = 1000 * 60 * 60; // 1시간
+
+const getCache = () => {
+    try {
+        const raw = localStorage.getItem(CACHE_KEY);
+        if (!raw) return null;
+        const { data, timestamp } = JSON.parse(raw);
+        if (Date.now() - timestamp > CACHE_TTL) return null;
+        return data;
+    } catch {
+        return null;
+    }
+};
+
+const setCache = (data) => {
+    try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ data, timestamp: Date.now() }));
+    } catch {
+        // localStorage 사용 불가 환경(시크릿 모드 등) 무시
+    }
+};
+
 async function loadProjects() {
     STATE.projects.state = 'loading';
     renderProjects();
+
+    const cached = getCache();
+    if (cached) {
+        STATE.projects.state = cached.length === 0 ? 'empty' : 'success';
+        STATE.projects.data = cached;
+        STATE.projects.allLanguages = extractLanguages(cached);
+        renderFilterButtons();
+        renderProjects();
+        return;
+    }
 
     const maxRetries = 2;
     let attempt = 0;
@@ -107,6 +140,7 @@ async function loadProjects() {
 
             const repos = await response.json();
             const ownRepos = repos.filter((repo) => !repo.fork);
+            setCache(ownRepos);
 
             STATE.projects.state = ownRepos.length === 0 ? 'empty' : 'success';
             STATE.projects.data = ownRepos;
