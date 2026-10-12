@@ -349,3 +349,34 @@ main section.in-view {
     border-radius: var(--radius);
     font-weight: 600;
 }
+
+/* ========================================
+   10. 테마 토글 회전 애니메이션
+   ======================================== */
+@keyframes rotate-toggle {
+    0%   { transform: rotate(0deg); }
+    50%  { transform: rotate(180deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.theme-toggle.is-rotating {
+    animation: rotate-toggle 0.3s ease;
+}
+
+/* ========================================
+   11. Projects 오류 상태 재시도 버튼
+   ======================================== */
+.projects-error-sub {
+    font-size: 0.9rem;
+    color: var(--color-text-sub);
+    margin-top: 8px;
+}
+
+.projects-retry {
+    margin-top: 12px;
+    padding: 8px 16px;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--radius);
+    cursor: pointer;
+}
