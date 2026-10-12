@@ -51,6 +51,16 @@
     transform: translateY(-2px);
 }
 
+/* 물결 텍스트 fade-in */
+.wave-text-visible {
+    animation: fade-in 1s ease forwards;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
 /* 물결 글자 애니메이션 */
 .wave-char {
     display: inline-block;
@@ -68,14 +78,13 @@
     display: inline-block;
     font-weight: 300;
     color: #555;
-    animation: blink 0.8s step-end infinite;
     margin-left: 2px;
     position: relative;
     bottom: 0.05em;
 }
 
 .typewriter-cursor--done {
-    animation: blink-out 0.8s step-end 5 forwards;
+    animation: blink-out 0.8s step-end 3 forwards;
 }
 
 .typewriter-cursor--hidden {
