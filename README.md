@@ -71,8 +71,9 @@
 <img width="888" height="340" alt="403" src="https://github.com/user-attachments/assets/81c8ddf7-483b-4c6d-b13b-fac0ad6c328b" />
 
 - **증상**: 애니메이션 추가 후, github api를 통해 프로젝트들을 불러오지 못하는 문제(403)
+- **원인**: GitHub REST API는 비인증 요청에 대해 IP당 60회/시간 rate limit을 적용하며, 초과 시 403을 반환함. 로컬 개발 중 반복적인 새로고침으로 동일 IP의 요청 한도가 소진됨
+- **해결**: API 응답을 localStorage에 캐싱하여 1시간 내 재방문 시 API를 재호출하지 않도록 처리. rate limit 소진 속도를 줄이고 응답 속도도 개선됨
 <br><br>
-
 
 #
 ### 개념 및 용어
