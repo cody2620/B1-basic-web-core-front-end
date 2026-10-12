@@ -9,7 +9,7 @@
 - ✅ CSS 스타일링 (반응형, 다크모드)
 - ✅ JavaScript 인터랙션 (DOM, 이벤트, 비동기)
 - ✅ GitHub API 연동
-- ✅ 배포 (예정)
+- ✅ 배포
 
 ### 📌 사용 기술
 - **HTML5**: 시맨틱 마크업 (`<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`)
@@ -42,10 +42,14 @@
 - 모바일
 <img width="402" height="875" alt="모바일" src="https://github.com/user-attachments/assets/b9bd91d2-050c-4ad1-a9ee-320b173cfc77" />
 
+- github api 로딩/에러/빈 상태
+
+<br><br>
+
 #
 ### 오류 및 수정사항
 
-**[Safari] 헤더 상단에 흰 여백이 생기는 문제**
+⚠️ **[Safari] 헤더 상단에 흰 여백이 생기는 문제**
 
 <img width="1462" height="475" alt="사파리 여백" src="https://github.com/user-attachments/assets/7ec03a11-7444-48ad-86f7-acc83fd679a3" />
 
@@ -60,6 +64,15 @@
   - `-webkit-backdrop-filter`: Safari가 blur 효과를 표준 스펙처럼 안정적으로 처리하게 함
   - `translateZ(0)`: 헤더를 독립된 GPU 레이어로 강제 분리시켜서, Safari가 레이어 경계를 잘못 계산하는 걸 우회
 - **교훈**: `backdrop-filter`처럼 최신 CSS 기능을 쓸 때는 Safari용 `-webkit-` 접두사를 항상 같이 넣고, `fixed` 요소에서 렌더링이 이상하면 `translateZ(0)`로 레이어를 분리해보는 게 기본 체크리스트.
+<br><br>
+
+⚠️ **프로젝트를 불러올 수 없습니다**
+
+<img width="888" height="340" alt="403" src="https://github.com/user-attachments/assets/81c8ddf7-483b-4c6d-b13b-fac0ad6c328b" />
+
+- **증상**: 애니메이션 추가 후, github api를 통해 프로젝트들을 불러오지 못하는 문제(403)
+<br><br>
+
 
 #
 ### 개념 및 용어
