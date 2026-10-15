@@ -1,5 +1,4 @@
 import { STATE } from './state.js';
-import { HTTP_ERROR_MESSAGES } from './errors.js';
 
 const contactForm = document.querySelector('#contact-form');
 const nameInput = document.querySelector('#name');
@@ -57,37 +56,10 @@ formInputs.forEach((input) => {
     });
 });
 
-const submitForm = async (formData) => {
-    const timeoutMs = 5000;
-
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-
-        const response = await fetch('/api/contact', {
-            method: 'POST',
-            body: formData,
-            signal: controller.signal
-        });
-
-        clearTimeout(timeoutId);
-
-        if (!response.ok) {
-            const status = response.status;
-            const errorMessage = HTTP_ERROR_MESSAGES[status] || `서버 오류 (상태 코드: ${status})`;
-            throw new Error(errorMessage);
-        }
-
-        return await response.json();
-    } catch (error) {
-        if (error.name === 'AbortError') {
-            throw new Error('요청 시간 초과 (5초). 인터넷 연결을 확인해주세요.');
-        }
-        if (error instanceof TypeError) {
-            throw new Error('네트워크 오류: 인터넷 연결을 확인해주세요.');
-        }
-        throw error;
-    }
+// 정적 사이트(GitHub Pages)는 서버가 없으므로 실제 전송 대신 성공을 시뮬레이션
+const submitForm = async () => {
+    await new Promise(resolve => setTimeout(resolve, 800));
+    return { success: true };
 };
 
 contactForm.addEventListener('submit', async (event) => {
@@ -114,7 +86,7 @@ contactForm.addEventListener('submit', async (event) => {
     STATE.form.lastSubmitData = formData;
 
     try {
-        await submitForm(formData);
+        await submitForm();
 
         STATE.form.status = 'success';
         renderFormStatus();

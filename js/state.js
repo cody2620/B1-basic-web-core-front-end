@@ -1,6 +1,6 @@
 const getInitialTheme = () => {
-    const sessionTheme = sessionStorage.getItem('theme');
-    if (sessionTheme) return sessionTheme;
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) return savedTheme;
 
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         return 'dark';
