@@ -1,3 +1,6 @@
+// 브라우저의 자동 스크롤 복원 비활성화: 새로고침 시 항상 맨 위에서 시작
+history.scrollRestoration = 'manual';
+
 import { STATE } from './state.js';
 import './contact.js';
 import './projects.js';
@@ -28,7 +31,7 @@ renderTheme(false);
 
 themeToggle.addEventListener('click', () => {
     STATE.theme = STATE.theme === 'dark' ? 'light' : 'dark';
-    sessionStorage.setItem('theme', STATE.theme);
+    localStorage.setItem('theme', STATE.theme);
     renderTheme(true);
 });
 
@@ -40,7 +43,7 @@ themeToggle.addEventListener('keydown', (e) => {
 });
 
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (!sessionStorage.getItem('theme')) {
+    if (!localStorage.getItem('theme')) {
         STATE.theme = e.matches ? 'dark' : 'light';
         renderTheme(false);
     }
@@ -52,7 +55,7 @@ const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
 const toggleMenu = () => {
-    const isOpen = navMenu.classList.toggle('open');
+    const isOpen = navMenu.classList.toggle('active');
     hamburger.setAttribute('aria-expanded', isOpen);
 };
 
@@ -78,12 +81,17 @@ const handleNavLinkClick = (event) => {
 
     event.preventDefault();
     targetSection.scrollIntoView({ behavior: 'smooth' });
-    navMenu.classList.remove('open');
+    navMenu.classList.remove('active');
 };
 
 navLinks.forEach((link) => {
     link.addEventListener('click', handleNavLinkClick);
 });
+
+const ctaEmoji = document.querySelector('a.emoji');
+if (ctaEmoji) {
+    ctaEmoji.addEventListener('click', handleNavLinkClick);
+}
 
 
 // ===== 4. 스크롤에 따른 헤더 스타일 변경 + 스크롤 탑 버튼 =====

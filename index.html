@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="css/footer.css">  
 
     <!-- JS 연결 (defer로 DOM 로드 후 실행) -->
-    <script src="js/main.js" type="module"></script>
+    <script src="js/main.js" type="module" defer></script>
 </head>
 <body>
 
@@ -43,7 +43,7 @@
 
         <!-- Hero 섹션: 인사말 및 CTA -->
         <section id="hero" aria-label="소개 및 환영 섹션">
-            <span class="emoji">👋</span>
+            <a href="#contact" class="emoji" aria-label="연락하기 섹션으로 이동">👋</a>
             <h2> 마리너 2기, 김수민입니다</h2>
             <p> 코디세이 항해 중...⛵  </p>
         </section>
