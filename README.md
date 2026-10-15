@@ -31,18 +31,29 @@
 - GitHub Pages: https://cody2620.github.io/B1-basic-web-core-front-end/
 
 ### 📌 상황 별 캡쳐
-- 데스크탑
+- **데스크탑**
 <img width="1292" height="874" alt="데스크탑" src="https://github.com/user-attachments/assets/b52fd660-cb30-4222-a5a2-3f23fb3b2e41" />
 <br><br>
 
-- 데스크탑 - 다크모드
+- **데스크탑 - 다크모드**
 <img width="1292" height="874" alt="다크모드" src="https://github.com/user-attachments/assets/0f83479c-7a01-4e29-9895-8d05701bd36c" />
 <br><br>
 
-- 모바일
+- **모바일**
 <img width="402" height="875" alt="모바일" src="https://github.com/user-attachments/assets/b9bd91d2-050c-4ad1-a9ee-320b173cfc77" />
+<br><br>
 
-- github api 로딩/에러/빈 상태
+- **github api 로딩/에러/빈 상태**
+1. 로딩 상태
+<img width="961" height="267" alt="로딩 상태" src="https://github.com/user-attachments/assets/b5037fb5-2c98-49fa-8912-84b68cde9e7c" />
+<br><br>
+
+2. 에러 상태
+<img width="961" height="325" alt="에러 상태" src="https://github.com/user-attachments/assets/bff281ed-7691-44cf-8f6c-9b73915b26bd" />
+<br><br>
+
+3. 빈 상태
+<img width="961" height="256" alt="빈 상태" src="https://github.com/user-attachments/assets/5c46d9c7-4baf-40ee-adf4-23c4dd8e2003" />
 
 <br><br>
 
