@@ -91,21 +91,21 @@
 
 #
 ### 개념 및 용어
-- Hero
+- **Hero**
 
 |  |  |
 | :--- | :--- |
 | 설명 | 메인 페이지 최상단의 가장 큰 비주얼 영역 like banner |
 | 구성 | 메인 이미지, 동영상, 핵심 문구, CTA(Call To Action) 버튼 등  |
 
-- CSS애서 flexBox와 grid
+- **CSS애서 flexBox와 grid**
   
 | | 특징 | 주로 사용하는 곳 예시 |
 | :--- | :--- | :--- |
 | Flexbox | 1차원 레이아웃, 가로 or 세로 한 방향 정렬 특화 | 작은 요소 정렬, 헤더 메뉴 정렬, 카드 내부 버튼 정렬 |
 | Grid | 2차원 레이아웃, 행과 열을 동시에 다루는 전체 레이아웃 특화 | 큰 틀, 전체 페이지 구조 |
 
-- 자바스크립트 함수
+- **자바스크립트 함수**
   1. getAttribute() : DOM 요소에서 지정한 속성의 값을 문자열로 반환하는 함수
 
      getAttributeNode() : 속성 객채(Attr)를 반환
@@ -117,9 +117,11 @@
      const targetId = link.getAttribute('href');
      ```
 
-- DOM 객체의 메서드
+- **DOM 객체의 메서드**
   1. querySelector() : 조건에 맞는 단일 요소 가져오기. 여러개인 경우 제일 첫번째만 선택.
   2. querySelectorAll() : 조건에 맞는 모든 요소들 가져오기(list). 목록이라 반복문(forEach) 없이는 이벤트를 연결할 수 없다.
+ 
+- **웹사이트 최소 화면 기준(min-size)**: 스마트 워치 가로 폭
   
 
 # 
